@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Encriptador Azu | Challenge Alura</title>
+        <link rel="stylesheet" href="css/reset.css">
+        <link rel="stylesheet" href="css/style.css">
+        <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.google.com/share?selection.family=Cairo%20Play:wght@400;1000%7CInter:wght@100" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <img class="logo" src="images/encriptado.png">
+        </header>
+        <main>
+            <div class="box">
+                <ul>
+                    <li>
+                        <textarea id="areatexto" type="text" placeholder="Ingrese el texto aquí"></textarea>
+                        <p class="warning"><i class="material-icons icon">&#xe88e;</i>Solo letras mínúsculas y sin acentos</p>
+                        <button id="encrip" class="btn-1">Encriptar</button>
+                        <button id="desencrip" class="btn-2">Desencriptar</button>  
+                    </li>
+                    <li class="derecho" id="sinmensaje">
+                        <img class="pato" src="images/patono.png">
+                        <h1>Ningún mensaje fue encontrado</h1>
+                        <p>Ingresa el texto que desees encriptar o desencriptar.</p>
+                    </li>
+                    <li class="derecho" id="conmensaje">
+                        <img class="pato" src="images/patosi.png">
+                        <p id="solucion">aquí va el mensaje</p>
+                        <button id="copi" class="btn-2">Copiar</button>  
+                    </li>
+                </ul>
+            </div>
+        </main>
+        <footer>
+            <div class="footer">
+                <ul class="box">
+                    <a href="https://github.com/azuncel"><img class="logo" src="images/azu.png"></a> 
+                    <a href="https://www.flaticon.es/stickers-gratis/pato"><img class="logo" src="images/patoreferencia.png"></a>                    
+                </ul>
+                  
+            </div>
+        </footer>
+        <script>
+
+            function verifica(){
+                let area = document.getElementById('areatexto').value;
+                if(area == ""){
+                    document.getElementById('sinmensaje').style.display = 'inline-block';
+                    document.getElementById('conmensaje').style.display = 'none';
+                    return false;                
+                }
+                else{
+                    document.getElementById('sinmensaje').style.display = 'none';
+                    document.getElementById('conmensaje').style.display = 'inline-block';
+                    return true;
+                }    
+            }
+            function cambialetras(letra){
+                switch(letra){
+                    case 'a': return 'ai'; break;
+                    case 'e': return 'enter'; break;
+                    case 'i': return 'imes'; break;
+                    case 'o': return 'ober'; break;
+                    case 'u': return 'ufat'; break;
+                }
+            }
+            function limpia(){
+              document.getElementById("areatexto").value = "";
+            }
+
+            function recorreMensaje(opcion){
+                let area = (document.getElementById("areatexto").value).toLowerCase();
+                let mensaje = "";
+                if(opcion=="encriptar"){
+                    for(let contador = 0; contador <area.length; contador++){
+                        if(area[contador] == "a" || area[contador] == "e"||area[contador] == "i"||
+                        area[contador] == "o" || area[contador] == "u" ){
+                            mensaje = mensaje + cambialetras(area[contador]);
+                        }
+                        else{
+                            mensaje = mensaje + area[contador];
+                        }
+                    }
+                }
+                if(opcion =="desencriptar") {
+                    mensaje = area.replace(/ai/gi,'a');
+                    mensaje = mensaje.replace(/enter/gi, 'e');
+                    mensaje = mensaje.replace(/imes/gi, 'i');
+                    mensaje = mensaje.replace(/ober/gi, 'o');
+                    mensaje = mensaje.replace(/ufat/gi, 'u');                    
+                }
+                return mensaje;
+            }
+
+           
+            function copiar(){
+                let p = document.getElementById("solucion").innerHTML;
+                navigator.clipboard.writeText(p);
+            }
+            function encriptar(){
+                if (verifica() == true){
+                    let p = document.getElementById("solucion");
+                    p.innerText = recorreMensaje("encriptar");;
+                    limpia();
+                }
+            }
+            function desencriptar(){
+                if (verifica() == true){
+                    let p = document.getElementById("solucion");
+                    p.innerText = recorreMensaje("desencriptar");;
+                    limpia();
+                }
+            }
+            var button = document.querySelector("encrip");
+            encrip.onclick = encriptar;
+            var button = document.querySelector("desencrip");
+            desencrip.onclick = desencriptar;
+            var button = document.querySelector("copi");
+            copi.onclick = copiar;
+        
+        </script>
+    </body>
+
+</html>
